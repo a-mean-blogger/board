@@ -1,0 +1,18 @@
+{
+  "name": "board",
+  "version": "1.0.0",
+  "description": "이 저장소의 코드는\r [http://a-mean-blog.com/ko/blog/MEAN/MEN-게시판](http://a-mean-blog.com/ko/blog/MEAN/MEN-게시판)에서 작성되었습니다.\r <br>\r ## 코드 다운받아 내 컴퓨터에서 실행하기\r [http://a-mean-blog.com/ko/stubs/GitHub에서-코드-clone하기](http://a-mean-blog.com/ko/stubs/GitHub에서-코드-clone하기) 게시물을 참고해 주세요.\r <br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.5.13"
+  }
+}
