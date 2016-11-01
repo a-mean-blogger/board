@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+    <% include ../partials/nav %>
+
+    <div class="container user user-index">
+
+      <div class="contentBox">
+        <h3 class="contentBoxTop">Users</h3>
+        <ul class="floats">
+          <% if(users == null || users.length == 0){ %>
+            <div class="noData" colspan=100> There is no user yet.</div>
+          <% } %>
+          <% users.forEach(function(user) { %>
+            <li>
+              <a href="/users/<%= user.username %>"><%= user.username %></a>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+
+    </div> <!-- container end -->
+  </body>
+</html>
