@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+    <% include ../partials/nav %>
+
+    <div class="container user user-show">
+
+      <div class="buttons">
+        <a class="btn btn-default" href="/users">Back</a>
+        <a class="btn btn-default" href="/users/<%= user.username %>/edit">Edit</a>
+      </div>
+
+      <form class="user-form form-horizontal" action="/users" method="post">
+        <div class="contentBox">
+          <h3 class="contentBoxTop"><%= user.username %></h3>
+          <fieldset disabled>
+            <div class="form-group">
+              <label for="name" class="col-sm-3">Name</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-sm-3">Email</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </form>
+
+    </div> <!-- container end -->
+  </body>
+</html>
