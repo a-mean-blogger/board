@@ -21,6 +21,13 @@ form .form-group{
   margin: 0;
   padding-bottom: 6px;
 }
+.ellipsis{
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .form-horizontal .control-label {
   padding-top: 5px;
   text-align: left;
@@ -112,6 +119,7 @@ form .form-group{
 .post-index .posts{
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  table-layout: fixed;
 }
 .post .posts th,
 .post .posts td
@@ -135,6 +143,10 @@ form .form-group{
 .post .posts tbody .noData{
   background-color: #FFFFFF;
   text-align: center;
+}
+.post .posts .author{
+  text-align: center;
+  width: 80px;
 }
 .post .posts .date{
   text-align: center;
