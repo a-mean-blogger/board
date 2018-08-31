@@ -9,48 +9,66 @@
     <div class="container user user-edit">
 
       <div class="buttons">
-        <a class="btn btn-default" href="/users/<%= user.username %>">Back</a>
+        <a class="btn btn-default" href="/users/<%= username %>">Back</a>
       </div>
 
-      <form class="user-form form-horizontal" action="/users/<%= user.username %>?_method=put" method="post">
+      <form class="user-form form-horizontal" action="/users/<%= username %>?_method=put" method="post">
         <div class="contentBox">
           <h3 class="contentBoxTop">Edit User</h3>
           <fieldset>
-            <div class="form-group">
+            <div class="form-group <%= (errors.currentPassword)?'has-error':'' %>">
               <label for="currentPassword" class="col-sm-12 control-label">Current Password*</label>
               <div class="col-sm-9 col-sm-offset-3">
                 <input class="form-control" type="password" id="currentPassword" name="currentPassword" value="">
+                <% if(errors.currentPassword){ %>
+                  <span class="help-block"><%= errors.currentPassword.message %></span>
+                <% } %>
               </div>
             </div>
             <hr></hr>
-            <div class="form-group">
+            <div class="form-group <%= (errors.username)?'has-error':'' %>">
               <label for="username" class="col-sm-3 control-label">Username*</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" id="username" name="username" value="<%= user.username %>">
+                <% if(errors.username){ %>
+                  <span class="help-block"><%= errors.username.message %></span>
+                <% } %>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <%= (errors.name)?'has-error':'' %>">
               <label for="name" class="col-sm-3 control-label">Name*</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
+                <% if(errors.name){ %>
+                  <span class="help-block"><%= errors.name.message %></span>
+                <% } %>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <%= (errors.email)?'has-error':'' %>">
               <label for="email" class="col-sm-3 control-label">Email</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
+                <% if(errors.email){ %>
+                  <span class="help-block"><%= errors.email.message %></span>
+                <% } %>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <%= (errors.newPassword)?'has-error':'' %>">
               <label for="newPassword" class="col-sm-12 control-label">New Password</label>
               <div class="col-sm-9 col-sm-offset-3">
                 <input class="form-control" type="password" id="newPassword" name="newPassword" value="">
+                <% if(errors.newPassword){ %>
+                  <span class="help-block"><%= errors.newPassword.message %></span>
+                <% } %>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <%= (errors.passwordConfirmation)?'has-error':'' %>">
               <label for="passwordConfirmation" class="col-sm-12 control-label">Password Confirmation</label>
               <div class="col-sm-9 col-sm-offset-3">
                 <input class="form-control" type="password" id="passwordConfirmation" name="passwordConfirmation" value="">
+                <% if(errors.passwordConfirmation){ %>
+                  <span class="help-block"><%= errors.passwordConfirmation.message %></span>
+                <% } %>
               </div>
             </div>
             <p>
@@ -61,6 +79,11 @@
         <div class="buttons">
           <button type="submit" class="btn btn-default">Submit</button>
         </div>
+        <% if(errors.unhandled){ %>
+          <div class="alert alert-danger">
+            <%= errors.unhandled %>
+          </div>
+        <% } %>
       </form>
 
     </div> <!-- container end -->
