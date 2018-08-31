@@ -70,6 +70,11 @@ form .form-group{
 .home h1{
   color: darkseagreen;
 }
+.home-login{
+  max-width: 330px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
 
 /* post style */
 .post {
