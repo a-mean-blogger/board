@@ -1,0 +1,19 @@
+{
+  "name": "board",
+  "version": "1.0.0",
+  "description": "이 저장소의 코드는\r [http://a-mean-blog.com/ko/blog/Node-JS-첫걸음/게시판-만들기](http://a-mean-blog.com/ko/blog/Node-JS-첫걸음/게시판-만들기)에서 작성되었습니다.\r <br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.0.5"
+  }
+}
