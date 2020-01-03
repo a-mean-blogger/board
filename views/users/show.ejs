@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+
+      <h3 class="contentBoxTop"><%= user.username %></h3>
+
+      <form class="user-form" action="/users" method="post">
+        <fieldset disabled>
+          <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <div>
+        <a class="btn btn-primary" href="/users">Back</a>
+        <a class="btn btn-primary" href="/users/<%= user.username %>/edit">Edit</a>
+        <form action="/users/<%= user.username %>?_method=delete" method="post" class="d-inline">
+          <a class="btn btn-primary" href="javascript:void(0)" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;">Delete</a>
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>
