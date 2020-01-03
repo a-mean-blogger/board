@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+
+      <h3 class="contentBoxTop mb-3">New User</h3>
+
+      <form action="/users" method="post">
+
+        <div class="form-group row">
+          <label for="username" class="col-sm-3 col-form-label">Username*</label>
+          <div class="col-sm-9">
+            <input type="text" id="username" name="username" value="" class="form-control">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-3 col-form-label">Name*</label>
+          <div class="col-sm-9">
+            <input type="text" id="name" name="name" value="" class="form-control">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="text" id="email" name="email" value="" class="form-control">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Password*</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" name="password" value="" class="form-control">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="passwordConfirmation" class="col-sm-3 col-form-label">Password Confirmation*</label>
+          <div class="col-sm-9 col-sm-offset-3">
+            <input type="password" id="passwordConfirmation" name="passwordConfirmation" value="" class="form-control">
+          </div>
+        </div>
+        <p>
+          <small>*Required</small>
+        </p>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+    </div>
+  </body>
+</html>

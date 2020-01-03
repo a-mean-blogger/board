@@ -25,3 +25,7 @@ body {
 .post-info{
   font-size: 0.8em;
 }
+
+.user-form {
+  width: 400px;
+}
