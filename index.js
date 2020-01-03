@@ -27,6 +27,7 @@ app.use(methodOverride('_method'));
 
 // Routes
 app.use('/', require('./routes/home'));
+app.use('/posts', require('./routes/posts'));
 
 // Port setting
 var port = 3000;
