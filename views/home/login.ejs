@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container">
+
+      <h3 class="mb-3">Login</h3>
+
+      <form class="user-form" action="/login" method="post">
+
+        <div class="form-group row">
+          <label for="username" class="col-sm-3 col-form-label">Username</label>
+          <div class="col-sm-9">
+            <input type="text" id="username" name="username" value="<%= username %>" class="form-control <%= (errors.username)?'is-invalid':'' %>">
+            <% if(errors.username){ %>
+              <span class="invalid-feedback"><%= errors.username %></span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" name="password" value="" class="form-control <%= (errors.password)?'is-invalid':'' %>">
+            <% if(errors.password){ %>
+              <span class="invalid-feedback"><%= errors.password %></span>
+            <% } %>
+          </div>
+        </div>
+
+        <% if(errors.login){ %>
+          <div class="invalid-feedback d-block"><%= errors.login %></div>
+        <% } %>
+
+        <div class="mt-3">
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+
+      </form>
+
+    </div>
+  </body>
+</html>
