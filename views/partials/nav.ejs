@@ -11,8 +11,13 @@
         <li class="nav-item"><a href="/posts" class="nav-link">Board</a></li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="/users" class="nav-link">Users</a></li>
-        <li class="nav-item"><a href="/users/new" class="nav-link">Sign Up</a></li>
+        <% if(isAuthenticated){ %>
+          <li class="nav-item"><a href="/users/<%= currentUser.username %>" class="nav-link">My Account</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+        <% } else { %>
+          <li class="nav-item"><a href="/users/new" class="nav-link">Sign Up</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+        <% } %>
       </ul>
     </div>
   </div>
