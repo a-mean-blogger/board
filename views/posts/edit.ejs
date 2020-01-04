@@ -21,13 +21,25 @@
 
         <div class="form-group">
           <label for="title">Title</label>
-          <input type="text" id="title" name="title" value="<%= post.title %>" class="form-control">
+          <input type="text" id="title" name="title" value="<%= post.title %>" class="form-control <%= (errors.title)?'is-invalid':'' %>">
+          <% if(errors.title){ %>
+            <span class="invalid-feedback"><%= errors.title.message %></span>
+          <% } %>
         </div>
 
         <div class="form-group">
           <label for="body">Body</label>
-            <textarea id="body" name="body" rows="5" class="form-control"><%= post.body %></textarea>
+          <textarea id="body" name="body" rows="5" class="form-control <%= (errors.body)?'is-invalid':'' %>"><%= post.body %></textarea>
+          <% if(errors.body){ %>
+            <span class="invalid-feedback"><%= errors.body.message %></span>
+          <% } %>
         </div>
+
+        <% if(errors.unhandled){ %>
+          <div class="invalid-feedback b-block">
+            <%= errors.unhandled %>
+          </div>
+        <% } %>
 
         <div>
           <a class="btn btn-primary" href="/posts/<%= post._id %>">Back</a>
