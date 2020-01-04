@@ -15,6 +15,7 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">Title</th>
+            <th scope="col" class="author">Author</th>
             <th scope="col" class="date">Date</th>
           </tr>
         </thead>
@@ -29,6 +30,9 @@
             <tr>
               <td>
                 <a href="/posts/<%= post._id %>"><div class="ellipsis"><%= post.title %></div></a>
+              </td>
+              <td class="author">
+                <div class="ellipsis"><%= post.author ? post.author.username : "" %></div>
               </td>
               <td class="date">
                 <span data-date="<%= post.createdAt %>"></span>
