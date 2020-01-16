@@ -76,7 +76,7 @@
 
       </div>
 
-      <form action="/posts" method="get">
+      <form action="/posts" method="get" class="post-index-tool">
         <div class="form-row">
 
           <div class="form-group col-3">
@@ -86,6 +86,21 @@
               <option value="10" <%= limit==10?'selected':'' %>>10 posts</option>
               <option value="20" <%= limit==20?'selected':'' %>>20 posts</option>
             </select>
+          </div>
+
+          <div class="form-group col-9">
+            <label>Search</label>
+            <div class="input-group">
+              <select name="searchType" class="custom-select">
+                <option value="title,body" <%= searchType=='title,body'?'selected':'' %>>Title, Body</option>
+                <option value="title" <%= searchType=='title'?'selected':'' %>>Title</option>
+                <option value="body" <%= searchType=='body'?'selected':'' %>>Body</option>
+              </select>
+              <input minLength="3" type="text" name="searchText" value="<%= searchText %>">
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </div>
+            </div>
           </div>
 
         </div>
