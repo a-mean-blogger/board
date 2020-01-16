@@ -43,11 +43,53 @@
 
       </table>
 
-      <div>
-        <% if(isAuthenticated){ %>
-          <a class="btn btn-primary" href="/posts/new">New</a>
-        <% } %>
+      <div class="row mb-3">
+
+        <div class="col-2">
+          <% if(isAuthenticated){ %>
+            <a class="btn btn-primary" href="/posts/new">New</a>
+          <% } %>
+        </div>
+
+        <nav class="col-8">
+          <%
+            var offset = 2;
+            var previousBtnEnabled = currentPage>1;
+            var nextBtnEnabled = currentPage<maxPage;
+          %>
+          <ul class="pagination pagination-sm justify-content-center align-items-center h-100 mb-0">
+            <li class="page-item <%= previousBtnEnabled?'':'disabled' %>">
+              <a class="page-link" href="/posts?page=<%= currentPage-1 %>&limit=<%= limit %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
+            </li>
+            <% for(i=1;i<=maxPage;i++){ %>
+              <% if(i==1 || i==maxPage || (i>=currentPage-offset && i<=currentPage+offset)){ %>
+                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/posts?page=<%= i %>&limit=<%= limit %>"> <%= i %> </a></li>
+              <% } else if(i==2 || i==maxPage-1){ %>
+                <li><a class="page-link">...</a></li>
+              <% } %>
+            <% } %>
+            <li class="page-item <%= nextBtnEnabled?'':'disabled' %>">
+              <a class="page-link" href="/posts?page=<%= currentPage+1 %>&limit=<%= limit %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+
       </div>
+
+      <form action="/posts" method="get">
+        <div class="form-row">
+
+          <div class="form-group col-3">
+            <label>Show</label>
+            <select name="limit" class="custom-select" onchange="this.parentElement.parentElement.parentElement.submit()">
+              <option value="5" <%= limit==5?'selected':'' %>>5 posts</option>
+              <option value="10" <%= limit==10?'selected':'' %>>10 posts</option>
+              <option value="20" <%= limit==20?'selected':'' %>>20 posts</option>
+            </select>
+          </div>
+
+        </div>
+      </form>
 
     </div>
   </body>
