@@ -20,7 +20,8 @@ body {
   width: 100px;
 }
 
-.post-body{
+.post-body,
+.comment-text {
   white-space: pre-line;
 }
 .post-info{
