@@ -28,11 +28,9 @@
       </form>
 
       <div>
-        <a class="btn btn-primary" href="/users">Back</a>
-        <a class="btn btn-primary" href="/users/<%= user.username %>/edit">Edit</a>
-        <form action="/users/<%= user.username %>?_method=delete" method="post" class="d-inline">
-          <a class="btn btn-primary" href="javascript:void(0)" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;">Delete</a>
-        </form>
+        <% if(isAuthenticated && currentUser.id == user.id){ %>
+          <a class="btn btn-primary" href="/users/<%= user.username %>/edit">Edit</a>
+        <% } %>
       </div>
 
     </div>
