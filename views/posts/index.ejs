@@ -29,7 +29,7 @@
           <% posts.forEach(function(post) { %>
             <tr>
               <td>
-                <a href="/posts/<%= post._id %>"><div class="ellipsis"><%= post.title %></div></a>
+                <a href="/posts/<%= post._id %><%= getPostQueryString() %>"><div class="ellipsis"><%= post.title %></div></a>
               </td>
               <td class="author">
                 <div class="ellipsis"><%= post.author ? post.author.username : "" %></div>
@@ -47,7 +47,7 @@
 
         <div class="col-2">
           <% if(isAuthenticated){ %>
-            <a class="btn btn-primary" href="/posts/new">New</a>
+            <a class="btn btn-primary" href="/posts/new<%= getPostQueryString() %>">New</a>
           <% } %>
         </div>
 
@@ -59,17 +59,17 @@
           %>
           <ul class="pagination pagination-sm justify-content-center align-items-center h-100 mb-0">
             <li class="page-item <%= previousBtnEnabled?'':'disabled' %>">
-              <a class="page-link" href="/posts?page=<%= currentPage-1 %>&limit=<%= limit %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
+              <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage-1}) %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
             </li>
             <% for(i=1;i<=maxPage;i++){ %>
               <% if(i==1 || i==maxPage || (i>=currentPage-offset && i<=currentPage+offset)){ %>
-                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/posts?page=<%= i %>&limit=<%= limit %>"> <%= i %> </a></li>
+                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/posts<%= getPostQueryString(false, {page:i}) %>"> <%= i %> </a></li>
               <% } else if(i==2 || i==maxPage-1){ %>
                 <li><a class="page-link">...</a></li>
               <% } %>
             <% } %>
             <li class="page-item <%= nextBtnEnabled?'':'disabled' %>">
-              <a class="page-link" href="/posts?page=<%= currentPage+1 %>&limit=<%= limit %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
+              <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage+1}) %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
             </li>
           </ul>
         </nav>
