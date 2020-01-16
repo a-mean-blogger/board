@@ -1,6 +1,7 @@
 var express  = require('express');
 var router = express.Router();
 var Post = require('../models/Post');
+var User = require('../models/User');
 var util = require('../util');
 
 // Index
@@ -10,17 +11,21 @@ router.get('/', async function(req, res){
   page = !isNaN(page)?page:1;
   limit = !isNaN(limit)?limit:10;
 
-  var searchQuery = createSearchQuery(req.query);
-
   var skip = (page-1)*limit;
-  var count = await Post.countDocuments(searchQuery);
-  var maxPage = Math.ceil(count/limit);
-  var posts = await Post.find(searchQuery)
-    .populate('author')
-    .sort('-createdAt')
-    .skip(skip)
-    .limit(limit)
-    .exec();
+  var maxPage = 0;
+  var searchQuery = await createSearchQuery(req.query);
+  var posts = [];
+
+  if(searchQuery) {
+    var count = await Post.countDocuments(searchQuery);
+    maxPage = Math.ceil(count/limit);
+    posts = await Post.find(searchQuery)
+      .populate('author')
+      .sort('-createdAt')
+      .skip(skip)
+      .limit(limit)
+      .exec();
+  }
 
   res.render('posts/index', {
     posts:posts,
@@ -111,7 +116,7 @@ function checkPermission(req, res, next){
   });
 }
 
-function createSearchQuery(queries){
+async function createSearchQuery(queries){
   var searchQuery = {};
   if(queries.searchType && queries.searchText && queries.searchText.length >= 3){
     var searchTypes = queries.searchType.toLowerCase().split(',');
@@ -122,7 +127,20 @@ function createSearchQuery(queries){
     if(searchTypes.indexOf('body')>=0){
       postQueries.push({ body: { $regex: new RegExp(queries.searchText, 'i') } });
     }
+    if(searchTypes.indexOf('author!')>=0){
+      var user = await User.findOne({ username: queries.searchText }).exec();
+      if(user) postQueries.push({author:user._id});
+    }
+    else if(searchTypes.indexOf('author')>=0){
+      var users = await User.find({ username: { $regex: new RegExp(queries.searchText, 'i') } }).exec();
+      var userIds = [];
+      for(var user of users){
+        userIds.push(user._id);
+      }
+      if(userIds.length>0) postQueries.push({author:{$in:userIds}});
+    }
     if(postQueries.length>0) searchQuery = {$or:postQueries};
+    else searchQuery = null;
   }
   return searchQuery;
 }

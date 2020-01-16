@@ -29,10 +29,14 @@
           <% posts.forEach(function(post) { %>
             <tr>
               <td>
-                <a href="/posts/<%= post._id %><%= getPostQueryString() %>"><div class="ellipsis"><%= post.title %></div></a>
+                <a href="/posts/<%= post._id %><%= getPostQueryString() %>">
+                  <div data-search-highlight="title" class="ellipsis"><%= post.title %></div>
+                </a>
               </td>
               <td class="author">
-                <div class="ellipsis"><%= post.author ? post.author.username : "" %></div>
+                <a href="/posts<%= getPostQueryString(false, { searchType:'author!', searchText:post.author.username }) %>">
+                  <div data-search-highlight="author" class="ellipsis"><%= post.author ? post.author.username : "" %></div>
+                </a>
               </td>
               <td class="date">
                 <span data-date="<%= post.createdAt %>"></span>
@@ -95,6 +99,7 @@
                 <option value="title,body" <%= searchType=='title,body'?'selected':'' %>>Title, Body</option>
                 <option value="title" <%= searchType=='title'?'selected':'' %>>Title</option>
                 <option value="body" <%= searchType=='body'?'selected':'' %>>Body</option>
+                <option value="author" <%= searchType=='author'?'selected':'' %>>Author</option>
               </select>
               <input minLength="3" type="text" name="searchText" value="<%= searchText %>">
               <div class="input-group-append">
