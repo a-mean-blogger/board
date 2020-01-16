@@ -1,0 +1,27 @@
+<%/*
+ actionUrl
+ comment
+ commentForm
+ commentError
+*/%>
+
+<form action="<%= actionUrl %><%= getPostQueryString(true) %>" method="post">
+  <fieldset <%= !isAuthenticated?'disabled':'' %>>
+    <div class="row">
+      <div class="col-8">
+        <textarea name="text" rows="2" class="form-control <%= (commentError._id == comment._id && commentError.errors.text)?'is-invalid':'' %>"><%= (commentForm._id == comment._id)?commentForm.form.text:comment.text %></textarea>
+      </div>
+      <div class="col-4">
+        <% if(comment._id){ %>
+          <button type="submit" class="btn btn-primary h-100 mr-2 pl-4 pr-4">Edit</button>
+          <a href="javascript:void(0)" onclick="$('#comment-<%= comment._id %>').removeClass('comment-edit-enabled')">Cancel</a>
+        <% } else { %>
+          <button type="submit" class="btn btn-primary h-100 mr-2">Add Comment</button>
+        <% } %>
+      </div>
+    </div>
+    <% if(commentError._id == comment._id && commentError.errors.text){ %>
+      <span class="invalid-feedback d-block"><%= commentError.errors.text.message %></span>
+    <% } %>
+  </fieldset>
+</form>
