@@ -1,0 +1,73 @@
+<%/*
+ post
+ comment
+ commentForm
+ commentError
+*/%>
+
+<div class="border-top">
+  <% if(comment.isDeleted){ %>
+    <div class="text-muted p-2">(Deleted Commnet)</div>
+  <% } else { %>
+    <div class="row pt-1 pb-1">
+      <div class="col-3 col-md-2 col-lg-1 pl-4"><%= comment.author.username %></div>
+      <div id="comment-<%= comment._id %>" class="col-9 col-md-10 col-lg-11 <%= (commentError._id == comment._id)?'comment-edit-enabled':'' %> <%= (commentError.parentComment == comment._id)?'comment-reply-enabled':'' %>">
+        <div class="comment-show">
+          <div class="comment-text mb-3"><%= comment.text %></div>
+          <small class="d-block">
+            ( Created: <span data-date-time="<%= comment.createdAt %>"></span>
+            <% if(comment.updatedAt){ %>
+              | Updated: <span data-date-time="<%= comment.updatedAt %>"></span>
+            <% } %>
+            )
+          </small>
+          <% if(isAuthenticated){ %>
+            <small class="d-block">
+              <a href="javascript:void(0)" onclick="$('.comment-reply-enabled').removeClass('comment-reply-enabled'); $('.comment-edit-enabled').removeClass('comment-edit-enabled'); $('#comment-<%= comment._id %>').addClass('comment-reply-enabled')">reply</a>
+              <% if(comment.author && currentUser.id == comment.author.id){ %>
+                |
+                <a href="javascript:void(0)" onclick="$('.comment-reply-enabled').removeClass('comment-reply-enabled'); $('.comment-edit-enabled').removeClass('comment-edit-enabled'); $('#comment-<%= comment._id %>').addClass('comment-edit-enabled')">Edit</a>
+                |
+                <form action="/comments/<%= comment._id %>?postId=<%= post._id %>&_method=delete<%= getPostQueryString(true) %>" method="post" class="d-inline">
+                  <a href="javascript:void(0)" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;">Delete</a>
+                </form>
+              <% } %>
+            </small>
+          <% } %>
+        </div>
+        <div class="comment-edit">
+          <%- include('./comment-form', {
+            actionUrl:'/comments/' + comment._id + '?postId=' + post._id + '&_method=put',
+            comment: comment,
+            commentForm: commentForm,
+            commentError: commentError,
+            parentComment: null,
+          }); %>
+        </div>
+        <div class="comment-reply">
+          <%- include('./comment-form', {
+            actionUrl:'/comments?postId=' + post._id,
+            comment: {},
+            commentForm: commentForm,
+            commentError: commentError,
+            parentComment: comment._id,
+          }); %>
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="ml-3">
+    <% if(comment.childComments){ %>
+      <% comment.childComments.forEach(function(childComment) { %>
+        <%- include('./comment-show', {
+          post: post,
+          comment: childComment,
+          commentForm: commentForm,
+          commentError: commentError,
+        }); %>
+      <% }) %>
+    <% } %>
+  </div>
+
+</div>
