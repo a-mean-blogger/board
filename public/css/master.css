@@ -44,10 +44,12 @@ body {
 }
 
 .comment-edit,
+.comment-reply,
 .comment-edit-enabled .comment-show {
   display:none;
 }
 
-.comment-edit-enabled .comment-edit {
+.comment-edit-enabled .comment-edit,
+.comment-reply-enabled .comment-reply {
   display:inherit;
 }
