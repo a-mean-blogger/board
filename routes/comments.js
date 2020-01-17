@@ -14,7 +14,7 @@ router.post('/', util.isLoggedin, checkPostId, function(req, res){
   Comment.create(req.body, function(err, comment){
     if(err){
       req.flash('commentForm', { _id:null, form:req.body });
-      req.flash('commentError', { _id:null, errors:util.parseError(err) });
+      req.flash('commentError', { _id:null, parentComment:req.body.parentComment, errors:util.parseError(err) });
     }
     return res.redirect('/posts/'+post._id+res.locals.getPostQueryString());
   });
@@ -28,7 +28,7 @@ router.put('/:id', util.isLoggedin, checkPermission, checkPostId, function(req, 
   Comment.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, comment){
     if(err){
       req.flash('commentForm', { _id:req.params.id, form:req.body });
-      req.flash('commentError', { _id:req.params.id, errors:util.parseError(err) });
+      req.flash('commentError', { _id:req.params.id, parentComment:req.body.parentComment, errors:util.parseError(err) });
     }
     return res.redirect('/posts/'+post._id+res.locals.getPostQueryString());
   });
