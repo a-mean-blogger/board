@@ -63,10 +63,37 @@ $(function(){
       if(index>=0){
         var decodedSearchText = params.searchText.replace(/\+/g, ' ');
         decodedSearchText = decodeURI(decodedSearchText);
-        
+
         var regex = new RegExp(`(${decodedSearchText})`,'ig');
         $element.html($element.html().replace(regex,'<span class="highlighted">$1</span>'));
       }
     });
   }
+});
+
+$(function(){
+  function resetTitleEllipsisWidth(){
+    $('.board-table .title-text').each(function(i,e){
+      var $text = $(e);
+      var $ellipsis = $(e).closest('.title-ellipsis');
+      var $comment = $(e).closest('.title-container').find('.title-comments');
+
+      var textWidth = $text.width();
+      var ellipsisWidth = $ellipsis.outerWidth();
+      var commentWidth = $comment.outerWidth();
+      var padding = 1;
+
+      if(ellipsisWidth <= (textWidth+commentWidth+padding)){
+        $ellipsis.width(ellipsisWidth-(commentWidth+padding));
+      }
+      else {
+        $ellipsis.width(textWidth+padding);
+      }
+    });
+  }
+  $(window).resize(function(){
+    $('.board-table .title-ellipsis').css('width','');
+    resetTitleEllipsisWidth();
+  });
+  resetTitleEllipsisWidth();
 });
