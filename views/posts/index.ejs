@@ -29,8 +29,13 @@
           <% posts.forEach(function(post) { %>
             <tr>
               <td>
-                <a href="/posts/<%= post._id %><%= getPostQueryString() %>">
-                  <div data-search-highlight="title" class="ellipsis"><%= post.title %></div>
+                <a href="/posts/<%= post._id %><%= getPostQueryString() %>" class="title-container">
+                  <div data-search-highlight="title" class="title-ellipsis ellipsis float-left">
+                    <span class="title-text"><%= post.title %></span>
+                  </div>
+                  <% if(post.commentCount){ %>
+                    <small class="title-comments d-inline-block pl-2">(<%= post.commentCount %>)</small>
+                  <% } %>
                 </a>
               </td>
               <td class="author">

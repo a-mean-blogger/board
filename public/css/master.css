@@ -19,6 +19,11 @@ body {
 .board-table .date {
   width: 100px;
 }
+.board-table .title-container:hover .title-comments,
+.board-table .title-container:hover .title-text
+{
+  text-decoration: underline;
+}
 
 .post-body,
 .comment-text {
