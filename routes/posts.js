@@ -43,6 +43,8 @@ router.get('/', async function(req, res){
           author: {
             username: 1,
           },
+          views: 1,
+          numId: 1,
           createdAt: 1,
           commentCount: { $size: '$comments'}
       } },
@@ -89,6 +91,8 @@ router.get('/:id', function(req, res){
       Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
     ])
     .then(([post, comments]) => {
+      post.views++;
+      post.save();
       var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
       res.render('posts/show', { post:post, commentTrees:commentTrees, commentForm:commentForm, commentError:commentError});
     })
