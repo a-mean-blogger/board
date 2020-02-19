@@ -16,7 +16,7 @@
         </ol>
       </nav>
 
-      <form action="/posts<%= getPostQueryString() %>" method="post">
+      <form action="/posts<%= getPostQueryString() %>" enctype="multipart/form-data" method="post">
 
         <div class="form-group">
           <label for="title">Title</label>
@@ -24,6 +24,11 @@
           <% if(errors.title){ %>
             <span class="invalid-feedback"><%= errors.title.message %></span>
           <% } %>
+        </div>
+
+        <div class="form-group">
+          <label for="attachment">Attachment</label>
+          <input type="file" name="attachment" class="form-control-file" id="attachment">
         </div>
 
         <div class="form-group">
