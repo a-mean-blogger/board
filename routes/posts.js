@@ -84,7 +84,13 @@ router.get('/new', util.isLoggedin, function(req, res){
 
 // create
 router.post('/', util.isLoggedin, upload.single('attachment'), async function(req, res){
-  var attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined;
+  var attachment;
+  try{
+    attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined;
+  }
+  catch(err){
+    return res.json(err);
+  }
   req.body.attachment = attachment;
   req.body.author = req.user._id;
   Post.create(req.body, function(err, post){
@@ -126,7 +132,9 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
   var post = req.flash('post')[0];
   var errors = req.flash('errors')[0] || {};
   if(!post){
-    Post.findOne({_id:req.params.id}, function(err, post){
+    Post.findOne({_id:req.params.id})
+      .populate({path:'attachment',match:{isDeleted:false}})
+      .exec(function(err, post){
         if(err) return res.json(err);
         res.render('posts/edit', { post:post, errors:errors });
       });
@@ -138,7 +146,17 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
 });
 
 // update
-router.put('/:id', util.isLoggedin, checkPermission, function(req, res){
+router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAttachment'), async function(req, res){
+  var post = await Post.findOne({_id:req.params.id}).populate({path:'attachment',match:{isDeleted:false}});
+  if(post.attachment && (req.file || !req.body.attachment)){
+    post.attachment.processDelete();
+  }
+  try{
+    req.body.attachment = req.file?await File.createNewInstance(req.file, req.user._id, req.params.id):post.attachment;
+  }
+  catch(err){
+    return res.json(err);
+  }
   req.body.updatedAt = Date.now();
   Post.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
     if(err){
