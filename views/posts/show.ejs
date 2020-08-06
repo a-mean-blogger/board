@@ -23,7 +23,7 @@
           <div class="col-md-7 col-lg-8 col-xl-9 order-sm-2 order-md-1">
             <% if(post.attachment) { %>
               <div class="ml-2">
-                <small>📁 Attachment: <%= post.attachment.originalFileName %> (<%= util.bytesToSize(post.attachment.size) %>)</small>
+                <small>📁 Attachment: <a href="/files/<%= post.attachment.serverFileName %>/<%= post.attachment.originalFileName %>"><%= post.attachment.originalFileName %></a> (<%= util.bytesToSize(post.attachment.size) %>)</small>
               </div>
             <% } %>
             <div class="post-body p-2" data-search-highlight="body"><%= post.body %></div>
