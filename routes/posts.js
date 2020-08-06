@@ -84,7 +84,13 @@ router.get('/new', util.isLoggedin, function(req, res){
 
 // create
 router.post('/', util.isLoggedin, upload.single('attachment'), async function(req, res){
-  var attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined;
+  var attachment;
+  try{
+    attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined;
+  }
+  catch(err){
+    return res.json(err);
+  }
   req.body.attachment = attachment;
   req.body.author = req.user._id;
   Post.create(req.body, function(err, post){
@@ -145,7 +151,12 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAttachmen
   if(post.attachment && (req.file || !req.body.attachment)){
     post.attachment.processDelete();
   }
-  req.body.attachment = req.file?await File.createNewInstance(req.file, req.user._id, req.params.id):post.attachment;
+  try{
+    req.body.attachment = req.file?await File.createNewInstance(req.file, req.user._id, req.params.id):post.attachment;
+  }
+  catch(err){
+    return res.json(err);
+  }
   req.body.updatedAt = Date.now();
   Post.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
     if(err){
